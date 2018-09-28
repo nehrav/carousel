@@ -1,0 +1,26 @@
+@font-face { /* latin */
+  font-family:'Ropa Sans'; font-style:normal; font-weight:400;
+  src:local('Ropa Sans Regular'), local('RopaSans-Regular'), url(ropa.woff2) format('woff2');
+  unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+
+@font-face { /* latin ext */
+  font-family:'Ropa Sans'; font-style:normal; font-weight:400;
+  src: local('Ropa Sans Regular'), local('RopaSans-Regular'), url(ropa-ext.woff2) format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+* {margin:0; padding:0;}
+
+body {background:#E7F0E5; color:#005E9C; font-family:'Ropa Sans', sans-serif;}
+h1 {margin:15px;} 
+#imageSlider .homeCarousel .slide {font-size:16px; font-weight:600;}
+#imageSlider .homeCarousel img {margin-bottom:10px; width:100%;}
+#imageSlider .homeCarousel .imageBox {margin-bottom:10px; height:250px; background-size:100% 100%; background-repeat:no-repeat;}
+
+@media (min-width:320px) and (max-width:760px) {
+  #imageSlider {padding:15px; background:#fff;}
+} 
+@media (min-width:761px) { 
+  #imageSlider .sliderContainer {padding:15px 0; background:#fff;}
+}
