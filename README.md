@@ -5,7 +5,7 @@ Adaptive carousel which can adapt based on passed configuration.
 
 ### How to use
 
-Just add a link to the css file in your <head>:
+Just add a link to the css file in your `<head>`:
 
 ```
 <link rel="stylesheet" type="text/css" href="carousel.css" />
@@ -13,7 +13,7 @@ Just add a link to the css file in your <head>:
 
 Then, before your closing <body> tag add:
 
-```
+```html
 <script type="text/javascript" src="carousel.js"></script>
 ```
 
@@ -21,13 +21,13 @@ Then, add element in your body tag with any id.
 
 This id will be used as reference to create carousel inside that (refer below code).
 
-```
+```html
 <div id='some-id'></div>
 ```
 
 Then, simply initialize it:
 
-```
+```html
 <script type="text/javascript">
   var element = document.getElementById('some-id')
       , config = { 
