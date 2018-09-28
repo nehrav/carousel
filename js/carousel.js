@@ -17,6 +17,21 @@
     if(arguments[0] && typeof arguments[0] === 'object') 
       _.options = extendDefaults(defaults, arguments[0]);  
 
+    _.originalSettings = _.options;
+    if(_.options.responsive && _.options.responsive.length && _.options.responsive !== null) {
+      _.options.responsive.sort(function(obj, b){
+        return obj.breakpoint-b.breakpoint
+      });
+
+      var windowWidth = window.innerWidth;
+      for(var i=0; i<_.options.responsive.length; i++) {
+        var obj = _.options.responsive[i];
+        if(windowWidth <= obj.breakpoint) { 
+          _.options = extendDefaults(_.originalSettings, obj.settings); 
+          break; 
+        } 
+      } 
+    }
     _.slider = _.options.elem; 
     _.windowWidth = 0;
     _.currentSlide = _.options.initialSlide;
@@ -33,6 +48,7 @@
       _.startLoad();
       _.loadCarousel();
       _.initializeEvents(); 
+      _.checkResponsive(!0); 
       _.slider.className = 'carouselLoaded'; 
     }
   }
@@ -295,13 +311,13 @@
       return;
     _.currentLeft = _.swipeLeft === null ? slideLeft : _.swipeLeft; 
 
-    if (targetSlide < 0) {
-      if (_.slideCount % _.options.slidesToScroll !== 0) 
+    if(targetSlide < 0) {
+      if(_.slideCount % _.options.slidesToScroll !== 0) 
         animSlide = _.slideCount - (_.slideCount % _.options.slidesToScroll);
       else 
         animSlide = _.slideCount + targetSlide; 
-    } else if (targetSlide >= _.slideCount) {
-      if (_.slideCount % _.options.slidesToScroll !== 0) 
+    } else if(targetSlide >= _.slideCount) {
+      if(_.slideCount % _.options.slidesToScroll !== 0) 
         animSlide = 0;
       else 
         animSlide = targetSlide - _.slideCount; 
@@ -312,10 +328,10 @@
     oldSlide = _.currentSlide;
     _.currentSlide = animSlide;
     _.setSlideClasses(_.currentSlide);
-
+    
     _.animateSlide(targetLeft, function() {
       _.postSlide(animSlide);
-    });
+    }); 
   }
 
   Carousel.prototype.animateSlide = function (targetLeft, callback) {
@@ -350,9 +366,87 @@
     }
   }
 
-  Carousel.prototype.checkResponsive = function () {
-    var _ = this;
+  Carousel.prototype.checkResponsive = function (initial) {
+    var _ = this
+      // , sliderWidth = _.slider.clientWidth
+      // , windowWidth = window.innerWidth
+      // , triggerBreakpoint = !1
+
+    // if(_.respondTo === 'window')  
+    //   respondToWidth = windowWidth;
+    // else if(_.respondTo === 'slider') 
+    //   respondToWidth = sliderWidth;
+    // else if(_.respondTo === 'min') 
+    //   respondToWidth = Math.min(windowWidth, sliderWidth); 
+
+    // if(_.options.responsive && _.options.responsive.length && _.options.responsive !== null) {
+    //   targetBreakpoint = null;
+    //   for (breakpoint in _.breakpoints) {
+    //     if(_.breakpoints.hasOwnProperty(breakpoint)) {
+    //       if(_.originalSettings.mobileFirst === false) 
+    //         if(respondToWidth < _.breakpoints[breakpoint])  
+    //           targetBreakpoint = _.breakpoints[breakpoint]; 
+    //       else  
+    //         if(respondToWidth > _.breakpoints[breakpoint]) 
+    //           targetBreakpoint = _.breakpoints[breakpoint];  
+    //     }
+    //   }
+
+    //   if(targetBreakpoint !== null) {
+    //     if(_.activeBreakpoint !== null) {
+    //       if(targetBreakpoint !== _.activeBreakpoint || forceUpdate) {
+    //         _.activeBreakpoint = targetBreakpoint;
+    //         if(_.breakpointSettings[targetBreakpoint] === 'unslick') {
+    //           _.unslick(targetBreakpoint);
+    //         } else {
+    //           _.options = $.extend({}, _.originalSettings, _.breakpointSettings[targetBreakpoint]);
+    //           if(initial === true) 
+    //             _.currentSlide = _.options.initialSlide; 
+    //           _.refresh(initial);
+    //         }
+    //         triggerBreakpoint = targetBreakpoint;
+    //       }
+    //     } else {
+    //       _.activeBreakpoint = targetBreakpoint;
+    //       if(_.breakpointSettings[targetBreakpoint] === 'unslick') 
+    //         _.unslick(targetBreakpoint);
+    //       else {
+    //         _.options = $.extend({}, _.originalSettings, _.breakpointSettings[targetBreakpoint]);
+    //         if(initial === true) 
+    //           _.currentSlide = _.options.initialSlide; 
+    //         _.refresh(initial);
+    //       }
+    //       triggerBreakpoint = targetBreakpoint;
+    //     }
+    //   } else {
+    //     if(_.activeBreakpoint !== null) {
+    //       _.activeBreakpoint = null;
+    //       _.options = _.originalSettings;
+    //       if(initial === true) 
+    //         _.currentSlide = _.options.initialSlide; 
+    //       _.refresh(initial);
+    //       triggerBreakpoint = targetBreakpoint;
+    //     }
+    //   }
+    // }
   }
+
+  // Carousel.prototype.refresh = function(initializing) {
+  //   var _ = this
+  //     , currentSlide
+      
+  //   if(_.slideCount <= _.options.slidesToShow)
+  //     _.currentSlide = 0; 
+
+  //   currentSlide = _.currentSlide;
+  //   _.destroy(true);
+
+  //   $.extend(_, _.initials, {currentSlide: currentSlide});
+  //   _.init();
+
+  //   if (!initializing) 
+  //     _.changeSlide('index', false); 
+  // };
 
   function extendDefaults(source, properties) {
     var property;

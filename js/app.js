@@ -1,6 +1,6 @@
 var myApp = {
   carouselID: 'imageSlider'
-  , imageLimit: 5
+  , imageLimit: 15
   , ajaxURL:'https://pixabay.com/api/?key=9656065-a4094594c34f9ac14c7fc4c39&q=beautiful+landscape&image_type=photo'
   , ajaxSuccess: function (resJSON) {
     var element = document.getElementById(this.carouselID)
@@ -10,6 +10,12 @@ var myApp = {
         , className:'homeCarousel'    // optional 
         , speed:500                   // optional 
         , slidesToShow:5              // optional 
+        , responsive: [ 
+          { breakpoint: 570, settings: { slidesToShow: 2, speed:150 } }
+          , { breakpoint: 780, settings: { slidesToShow: 3 } }
+          , { breakpoint: 420, settings: { slidesToShow: 1, speed:200 } }
+          , { breakpoint: 1024, settings: { slidesToShow: 4, speed:400 } }
+        ]
       }
       , imageCarousel
       , docFrag
