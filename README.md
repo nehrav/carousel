@@ -35,6 +35,12 @@ Then, simply initialize it:
         , className:'custom-class'    // optional 
         , speed:500                   // optional | default:300
         , slidesToShow:5              // optional | default:1
+        , responsive: [               // optional, to show different number of slides based on width
+          { breakpoint: 570, settings: { slidesToShow: 2 } }
+          , { breakpoint: 780, settings: { slidesToShow: 3 } }
+          , { breakpoint: 420, settings: { slidesToShow: 1 } }
+          , { breakpoint: 1024, settings: { slidesToShow: 4 } }
+        ]
       }
       , slider = new Carousel(config);
   slider.init();
