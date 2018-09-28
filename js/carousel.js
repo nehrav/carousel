@@ -1,10 +1,7 @@
 // immediately invoked functional expression to wrap my carousel
 (function() {
 	this.Carousel = function() { 
-		var _ = this; 
-
-    // Determine proper prefix
-    // _.transitionEnd = transitionSelect();
+		var _ = this;  
 
     // Define option defaults 
     var defaults = {
@@ -35,8 +32,7 @@
       _.buildArrows();
       _.startLoad();
       _.loadCarousel();
-      _.initializeEvents();
-
+      _.initializeEvents(); 
       _.slider.className = 'carouselLoaded'; 
     }
   }
@@ -52,7 +48,7 @@
       var node = slideClone.childNodes[i];
       node.className = 'slide'; 
       node.setAttribute('role', 'option');
-      // node.setAttribute('aria-hidden', 'true');
+      // node.setAttribute('aria-hidden', '!0');
       node.setAttribute('tabindex', '-1');
       nodeListStr += node.outerHTML;
       nodeList.push(node); 
@@ -214,20 +210,17 @@
 
     _.slideOffset += _.slideWidth * Math.floor(_.options.slidesToShow / 2) - _.slideWidth;  
     targetLeft = ((slideIndex * _.slideWidth) * -1) + _.slideOffset;
-    console.log(targetLeft);
     return targetLeft;
   }
 
   Carousel.prototype.setCSS = function (position) {
     var _ = this
       , x = Math.ceil(position) + 'px'
-     
     _.carouselRow.style[_.animType] = 'translate3d(' + x + ', 0px, 0px)';
   }
 
   Carousel.prototype.initializeEvents = function () {
     var _ = this;
-
     _.initArrowEvents();
     window.addEventListener('resize', this.resize.bind(this));
   }
@@ -247,20 +240,20 @@
     
     allSlides.forEach(function (node) {
       node.classList.remove('active', 'slider-center', 'slider-current');
-      node.setAttribute('aria-hidden', 'true');
+      node.setAttribute('aria-hidden', '!0');
     });
     _.slides[index].classList.add('slider-current');  
 
     if(index >= centerOffset && index <= (_.slideCount - 1) - centerOffset) {
       _.slides.slice(index - centerOffset, index + centerOffset + 1).forEach(function (node) {
         node.classList.add('active');
-        node.setAttribute('aria-hidden', 'false');
+        node.setAttribute('aria-hidden', '!1');
       }); 
     } else {
       indexOffset = _.options.slidesToShow + index; 
       Array.prototype.slice.call(allSlides).slice(indexOffset - centerOffset + 1, indexOffset + centerOffset + 2).forEach(function (node) {
         node.classList.add('active');
-        node.setAttribute('aria-hidden', 'false');
+        node.setAttribute('aria-hidden', '!1');
       });
     }
     if(index === 0 && (_.slideCount > _.options.slidesToShow)) 
@@ -296,7 +289,7 @@
       , slideLeft = _.getLeft(_.currentSlide)
       , animSlide
 
-    if(_.animating === true) 
+    if(_.animating === !0) 
       return;  
     if(_.slideCount <= _.options.slidesToShow) 
       return;
@@ -315,7 +308,7 @@
     } else 
       animSlide = targetSlide; 
     
-    _.animating = true;
+    _.animating = !0;
     oldSlide = _.currentSlide;
     _.currentSlide = animSlide;
     _.setSlideClasses(_.currentSlide);
@@ -340,9 +333,8 @@
   }
 
   Carousel.prototype.postSlide = function () {
-    var _ = this;
-
-    _.animating = false;
+    var _ = this; 
+    _.animating = !1;
     _.setPosition();
     _.swipeLeft = null;
   }
@@ -353,8 +345,7 @@
       clearTimeout(_.windowDelay);
       _.windowDelay = window.setTimeout(function() {
         _.windowWidth = window.innerWidth;
-        _.checkResponsive();
-          // if( !_.unslicked ) { _.setPosition(); }
+        _.checkResponsive(); 
       }, 50);
     }
   }
@@ -365,7 +356,7 @@
 
   function extendDefaults(source, properties) {
     var property;
-    for (property in properties) {
+    for(property in properties) {
       if(properties.hasOwnProperty(property)) 
         source[property] = properties[property]; 
     }
